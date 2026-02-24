@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Add Appointment Slot{% endblock %}
+{% block content %}
+<div class="admin-dashboard-layout">
+    <aside class="admin-sidepanel">
+        <div class="sidepanel-header">
+            <i class="fas fa-cogs"></i> Admin Panel
+        </div>
+        <nav class="sidepanel-nav">
+            <a href="{% url 'admin_dashboard' %}" class="sidepanel-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="{% url 'admin_doctor_list' %}" class="sidepanel-link"><i class="fas fa-user-md"></i> Manage Doctors</a>
+            <a href="{% url 'admin_speciality_list' %}" class="sidepanel-link"><i class="fas fa-stethoscope"></i> Manage Specialities</a>
+            <a href="{% url 'admin_booking_list' %}" class="sidepanel-link"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
+            <a href="{% url 'admin_slot_list' %}" class="sidepanel-link"><i class="fas fa-clock"></i> Appointment Slots</a>
+        </nav>
+    </aside>
+    <main class="admin-dashboard-main">
+        <div class="admin-dashboard-container">
+            <h1 class="dashboard-title">Add Appointment Slot</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_doctor">Doctor</label>
+                    {{ form.doctor }}
+                </div>
+                <div class="form-group">
+                    <label for="id_date">Date</label>
+                    <input type="date" name="date" id="id_date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_time">Time</label>
+                    <input type="time" name="time" id="id_time" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Slot</button>
+            </form>
+        </div>
+    </main>
+</div>
+{% endblock %}

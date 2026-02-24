@@ -1,0 +1,691 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<div class="doctor-page-layout">
+  <div class="left-column">
+      <div class="detailed-doctor-card-container">
+          <div class="detailed-doctor-card">
+              <div class="doctor-profile-header">
+                  <div class="doctor-avatar-section">
+                      <img src="{{doctor.image.url}}" alt="Dr. Sarah Johnson" class="profile-avatar">
+                      
+                      <div class="verified-icon"><i class="fas fa-check-circle"></i></div>
+                  </div>
+                  <div class="doctor-main-info">
+                      <h1 class="doctor-name">Dr.{{doctor.name}}</h1>
+                      <p class="doctor-specialty">{{doctor.speciality}}</p>
+                      <div class="doctor-rating">
+                          <i class="fas fa-star yellow"></i>
+                          <i class="fas fa-star yellow"></i>
+                          <i class="fas fa-star yellow"></i>
+                          <i class="fas fa-star yellow"></i>
+                          <i class="fas fa-star-half-alt yellow"></i>
+                          <span class="rating-text">{{doctor.rating}}</span>
+                      </div>
+                  </div>
+                  <div class="social-icons">
+                    
+                
+                    <!-- Phone -->
+                    <div class="social-btn call-btn" onclick="toggleInfo(this)" style="position: relative; cursor: pointer; margin-right: 10px;">
+                        <i class="fas fa-phone-alt"></i>
+                        <div class="info-popup" style="display:none; position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
+                            background: #eee; padding: 5px 10px; border-radius: 5px; font-weight: bold; white-space: nowrap; box-shadow: 0 0 5px rgba(0,0,0,0.2); z-index: 10;">
+                            {{ doctor.contact_number }}
+                        </div>
+                    </div>
+                
+                    <!-- Email -->
+                    <div class="social-btn message-btn" onclick="toggleInfo(this)" style="position: relative; cursor: pointer;">
+                        <i class="far fa-envelope"></i>
+                        <div class="info-popup" style="display:none; position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
+                            background: #eee; padding: 5px 10px; border-radius: 5px; font-weight: bold; white-space: nowrap; box-shadow: 0 0 5px rgba(0,0,0,0.2); z-index: 10;">
+                            {{ doctor.email }}
+                        </div>
+                    </div>
+                </div>
+                
+              </div>
+
+              <div class="doctor-details-grid">
+                  <div class="detail-item">
+                      <i class="fas fa-briefcase detail-icon"></i>
+                      <span><span class="detail-value">{{doctor.experience}}</span> years of Experience</span>
+                  </div>
+                  <div class="detail-item">
+                      <i class="fas fa-map-marker-alt detail-icon"></i>
+                      <span>Location</span> <span class="detail-value">{{doctor.location}}</span>
+                  </div>
+                  <div class="detail-item">
+                      <i class="fas fa-users detail-icon"></i>
+                      <span><span class="detail-value">1000+</span> Patients Treated</span>
+                  </div>
+                  <div class="detail-item">
+                      <i class="fas fa-clock detail-icon"></i>
+                      <span><span class="detail-value"></span> 60 mins Response Time</span>
+                  </div>
+              </div>
+
+              <div class="doctor-degrees-section">
+                  <span class="degree-tag">{{doctor.education_1}}</span>
+                  <span class="degree-tag">{{doctor.education_2}}</span>
+                  <span class="degree-tag">{{doctor.education_3}}</span>
+                  <span class="degree-tag">{{doctor.education_4}}</span>
+              </div>
+              
+
+              <p class="languages-spoken">
+                <i class="fas fa-language"></i> clinic name :
+                <span class="lang-list">{{doctor.clinic_name}}</span>
+            </p>
+            
+
+            <p class="languages-spoken">
+                <i class="fas fa-language"></i> address :
+                <span class="lang-list">{{doctor.address}}</span>
+            </p>
+           
+              
+
+              <div class="card-footer-badges detailed-page">
+                  <span class="footer-badge"><i class="fas fa-check-circle"></i> Verified Doctor</span>
+                  <span class="footer-badge"><i class="fas fa-star"></i> Top Rated</span>
+                  <span class="footer-badge"><i class="fas fa-shield-alt"></i> HIPAA Compliant</span>
+              </div>
+          </div>
+      </div>
+
+        <div class="doctor-info-card-container">
+          <div class="doctor-info-card">
+
+            <h2 class="section-title">About Dr. {{ doctor.name }}</h2>
+            <p class="about-text">
+              {{ doctor.summary|default:"No summary provided." }}
+            </p>
+
+            <h3 class="section-subtitle">Specializations</h3>
+            <div class="specialization-tags">
+              <span class="specialization-tag"><i class="fas fa-check-circle"></i> {{ doctor.speciality }}</span>
+              {% if doctor.other_specialization_1 %}
+                <span class="specialization-tag"><i class="fas fa-check-circle"></i> {{ doctor.other_specialization_1 }}</span>
+              {% endif %}
+              {% if doctor.other_specialization_2 %}
+                <span class="specialization-tag"><i class="fas fa-check-circle"></i> {{ doctor.other_specialization_2 }}</span>
+              {% endif %}
+              {% if doctor.other_specialization_3 %}
+                <span class="specialization-tag"><i class="fas fa-check-circle"></i> {{ doctor.other_specialization_3 }}</span>
+              {% endif %}
+              {% if doctor.other_specialization_4 %}
+                <span class="specialization-tag"><i class="fas fa-check-circle"></i> {{ doctor.other_specialization_4 }}</span>
+              {% endif %}
+            </div>
+
+            <h2 class="section-title">Experience & Education</h2>
+            <div class="experience-details">
+              <strong>Experience:</strong>
+              <p>{{ doctor.experience_details|default:"No experience details provided." }}</p>
+            </div>
+            <div class="education-details">
+              <strong>Education:</strong>
+              <ul>
+                {% if doctor.education_1 %}<li>{{ doctor.education_1 }}</li>{% endif %}
+                {% if doctor.education_2 %}<li>{{ doctor.education_2 }}</li>{% endif %}
+                {% if doctor.education_3 %}<li>{{ doctor.education_3 }}</li>{% endif %}
+                {% if doctor.education_4 %}<li>{{ doctor.education_4 }}</li>{% endif %}
+              </ul>
+            </div>
+
+            <h2 class="section-title">Available Time Slots</h2>
+            <h3 class="select-date-heading">Select Date</h3>
+            <div class="date-selection-grid">
+              {% for day in availability_data %}
+              <div class="date-option-card {% if forloop.first %}active{% endif %}" data-date="{{ day.date }}">
+                <span class="day-of-week">{{ day.day }}</span>
+                <span class="slots-available">{{ day.slot_count }} slots</span>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="available-times-section">
+              <h3 class="section-subtitle" style="margin-top: 25px;">Available Times</h3>
+              {% for day in availability_data %}
+              <div class="time-slots-grid time-slot-group {% if not forloop.first %}d-none{% endif %}" data-date="{{ day.date }}">
+                {% for slot in day.slots %}
+                <button class="time-slot-tag" id="selectedTimeButton"
+                type="button"
+                data-time="{{ slot.time|time:'g:i A' }}"
+                data-date="{{ day.date }}"
+                data-day="{{ day.day }}"
+                data-slotId = "{{ slot.id }}"
+                data-amount="{{ doctor.consultation_fee }}">
+                  {{ slot.time|time:"g:i A" }}
+                  <p style="display:hidden" > {{ slot.id }}</p>
+                </button>
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <ul>
+ 
+  </ul>
+
+  <div class="right-column">
+    <div class="book-appointment-card">
+      <h2 class="book-appointment-title">Book Appointment</h2>
+  
+      <form class="bookingForm" id="booking-form" method="POST" action="{% url 'book-slot' doctor.slug 0 %}">
+        {% csrf_token %}
+        <input type="hidden" name="doctor_id" value="{{ doctor.id }}">
+        <input type="hidden" name="total" id="totalAmountField" value="">
+        <div class="consultation-options">
+          <label class="consultation-option-card clinic-visit-selected">
+            <input type="radio" name="consultation_type" value="clinic_visit" checked>
+            <div class="option-content" style="box-shadow:none">
+              <div class="option-header">
+                <i class="fas fa-hospital option-icon"></i>
+                <span class="option-name">Clinic Visit</span>
+              </div>
+              <p class="option-description">In-person consultation</p>
+              <span class="option-price">₹{{ doctor.consultation_fee }}</span>
+            </div>
+          </label>
+
+        </div> 
+  
+        <div class="price-breakdown-section">
+          <h3 class="section-subtitle">Price Breakdown</h3>
+          <div class="price-item">
+            <span class="price-label">Appointment Fee:</span>
+            <span id="consultation-fee" class="price-value">₹{{ doctor.consultation_fee }}</span>
+          </div>
+          <div class="price-item">
+            <span class="price-label">Platform Fee:</span>
+            <span id="platform-fee" class="price-value">₹100</span>
+          </div>
+          <div class="price-item total-price">
+            <span class="price-label">Total:</span>
+            <span id="total-price" class="price-value">₹{{ doctor.consultation_fee|add:100 }}</span>
+          </div>
+        </div>
+  
+        <div class="quick-information-section">
+          <h3 class="section-subtitle">Booking details</h3>
+          <div class="info-item">
+            <i class="fas fa-clock info-icon"></i>
+            <div class="info-text">
+              <span class="info-label">Booking for:</span>
+              <span class="info-value">{{ request.user.get_full_name|default:request.user.username }}</span>
+              <span class="info-value" id="booking-datetime"></span>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-comment-dots info-icon"></i>
+            <div class="info-text">
+              <span class="info-label">Total Amount: </span>
+              <span class="info-value" id="booking-amount">₹{{ doctor.consultation_fee|add:100 }}</span>
+            </div>
+          </div>
+        </div>
+  
+        <button type="submit" class="book-appointment-btn" style="margin-top: 20px;">Book & Pay with Razorpay</button>
+      </form>
+    </div>
+  </div>
+
+  
+<script>
+  // Simple JavaScript for tab switching
+  document.addEventListener('DOMContentLoaded', () => {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabPanes = document.querySelectorAll('.tab-pane');
+
+      tabButtons.forEach(button => {
+          button.addEventListener('click', () => {
+              // Deactivate all buttons and hide all panes
+              tabButtons.forEach(btn => btn.classList.remove('active'));
+              tabPanes.forEach(pane => pane.classList.remove('active'));
+
+              // Activate clicked button
+              button.classList.add('active');
+
+              // Show corresponding pane
+              const targetTab = button.dataset.tab;
+              document.getElementById(targetTab).classList.add('active');
+          });
+      });
+
+      // Optional: Add logic for consultation option selection (like adding a class)
+      const consultationOptions = document.querySelectorAll('.consultation-option-card input[type="radio"]');
+      consultationOptions.forEach(radio => {
+          radio.addEventListener('change', () => {
+              consultationOptions.forEach(r => r.closest('.consultation-option-card').classList.remove('clinic-visit-selected'));
+              if (radio.checked) {
+                  radio.closest('.consultation-option-card').classList.add('clinic-visit-selected');
+              }
+          });
+      });
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    const slotButtons = document.querySelectorAll(".time-slot-tag");
+    const bookingForm = document.getElementById("booking-form");
+    const bookPayBtn = document.querySelector(".book-appointment-btn");
+    const totalAmountField = document.getElementById("totalAmountField");
+    let slotSelected = false;
+    let selectedSlotId = null;
+    const originalAction = bookingForm.getAttribute("action");
+
+    // Disable pay button by default
+    if (bookPayBtn) bookPayBtn.disabled = true;
+
+    slotButtons.forEach(button => {
+      button.addEventListener("click", (e) => {
+        selectedSlotId = e.currentTarget.querySelector("p").innerText.trim();
+        bookingForm.setAttribute("action", `${originalAction}${selectedSlotId}`);
+        // Set total field value
+        const amount = e.currentTarget.dataset.amount;
+        if (totalAmountField && amount) {
+          totalAmountField.value = (parseFloat(amount) + 100).toFixed(2);
+        }
+        // Enable the pay button
+        if (bookPayBtn) bookPayBtn.disabled = false;
+        slotSelected = true;
+      });
+    });
+
+    // Prevent form submission if no slot selected or total is empty
+    if (bookingForm && bookPayBtn) {
+      bookingForm.addEventListener("submit", function (event) {
+        if (!slotSelected || !selectedSlotId || !totalAmountField.value) {
+          event.preventDefault();
+          alert("Please select a time slot before booking and paying.");
+          bookPayBtn.disabled = true;
+        }
+      });
+    }
+  });
+  
+    document.addEventListener('DOMContentLoaded', () => {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Deactivate all buttons and hide all panes
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+
+            // Activate clicked button
+            button.classList.add('active');
+
+            // Show corresponding pane
+            const targetTab = button.dataset.tab;
+            document.getElementById(targetTab).classList.add('active');
+
+            // If switching to Availability tab, ensure first date is active and times are shown
+            if (targetTab === 'availability') {
+                const firstDateCard = document.querySelector('.date-selection-grid .date-option-card');
+                const availableTimesSection = document.querySelector('.available-times-section');
+
+                // Reset active state for all date cards
+                document.querySelectorAll('.date-option-card').forEach(card => card.classList.remove('active'));
+                // Set the first date card as active
+                if (firstDateCard) {
+                    firstDateCard.classList.add('active');
+                }
+                // Show the available times section
+                if (availableTimesSection) {
+                    availableTimesSection.classList.add('show');
+                }
+            }
+        });
+    });
+
+    // Optional: Add logic for consultation option selection (like adding a class)
+    const consultationOptions = document.querySelectorAll('.consultation-option-card input[type="radio"]');
+    consultationOptions.forEach(radio => {
+        radio.addEventListener('change', () => {
+            consultationOptions.forEach(r => r.closest('.consultation-option-card').classList.remove('clinic-visit-selected'));
+            if (radio.checked) {
+                radio.closest('.consultation-option-card').classList.add('clinic-visit-selected');
+            }
+        });
+    });
+
+    // --- New JavaScript for Date and Time Slot Selection ---
+    const dateOptionCards = document.querySelectorAll('.date-option-card');
+    const availableTimesSection = document.querySelector('.available-times-section');
+    const timeSlotTags = document.querySelectorAll('.time-slot-tag'); // Get all time slots
+
+    // Handle Date Card Clicks
+    dateOptionCards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Remove 'active' class from all date cards
+            dateOptionCards.forEach(c => c.classList.remove('active'));
+
+            // Add 'active' class to the clicked card
+            card.classList.add('active');
+
+            // Show the available times section
+            availableTimesSection.classList.add('show');
+
+            // Optional: You could fetch/update time slots based on the selected date here
+            // For this example, we're just showing the static list.
+        });
+    });
+
+    // Handle Time Slot Tag Clicks (Optional: for selection feedback)
+    timeSlotTags.forEach(slot => {
+        slot.addEventListener('click', () => {
+            // Remove 'selected' class from all time slots
+            timeSlotTags.forEach(s => s.classList.remove('selected'));
+
+            // Add 'selected' class to the clicked time slot
+            slot.classList.add('selected');
+        });
+    });
+
+    // Initial state: When page loads, if Availability is the default active tab,
+    // ensure the "Today" date card is active and times are shown.
+    const initialActiveTab = document.querySelector('.tab-button.active');
+    if (initialActiveTab && initialActiveTab.dataset.tab === 'availability') {
+         const firstDateCard = document.querySelector('.date-selection-grid .date-option-card');
+         if (firstDateCard) {
+             firstDateCard.classList.add('active');
+         }
+         if (availableTimesSection) {
+            availableTimesSection.classList.add('show');
+         }
+    }
+});
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("booking-form");
+
+    form.addEventListener("submit", function (event) {
+      const selectedSlotId = document.getElementById("selected-slot-id").value;
+
+      if (!selectedSlotId) {
+        event.preventDefault(); // Stop form from submitting
+        alert("Please select a time slot before booking.");
+      } else {
+        console.log("Submitting form with slot ID:", selectedSlotId);
+        // You can optionally show a loader or disable the button here
+      }
+    });
+  });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const consultationFees = {
+      clinic_visit: parseFloat("{{ doctor.consultation_fee }}"),
+      video_call: parseFloat("{{ doctor.online_consultation }}")
+    };
+    const platformFee = 100;
+    const taxRate = 0.18;
+
+    const consultationFeeEl = document.getElementById('consultation-fee');
+    const platformFeeEl = document.getElementById('platform-fee');
+    const taxesEl = document.getElementById('taxes');
+    const totalPriceEl = document.getElementById('total-price');
+
+    function updatePrices(selectedType) {
+      const consultationFee = consultationFees[selectedType] || 0;
+      const taxAmount = (consultationFee + platformFee) * taxRate;
+      const total = consultationFee + platformFee + taxAmount;
+
+      consultationFeeEl.textContent = '₹' + consultationFee.toFixed(2);
+      platformFeeEl.textContent = '₹' + platformFee.toFixed(2);
+      taxesEl.textContent = '₹' + taxAmount.toFixed(2);
+      totalPriceEl.textContent = '₹' + total.toFixed(2);
+      document.getElementById('totalAmountField').value = total.toFixed(2);
+    }
+
+    // On page load initialize
+    updatePrices('clinic_visit');
+
+    // Handle radio change
+    const radios = document.querySelectorAll('input[name="consultation_type"]');
+    radios.forEach(radio => {
+      radio.addEventListener('change', e => {
+        if (e.target.checked) {
+          updatePrices(e.target.value);
+        }
+      });
+    });
+  });
+
+    document.querySelectorAll('.date-option-card').forEach(card => {
+        card.addEventListener('click', function () {
+            // Switch active class
+            document.querySelectorAll('.date-option-card').forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+    
+            // Get the selected date
+            const selectedDate = this.getAttribute('data-date');
+    
+            // Hide all time slot groups
+            document.querySelectorAll('.time-slot-group').forEach(group => {
+                group.classList.add('d-none');
+            });
+    
+            // Show the one matching selected date
+            const activeGroup = document.querySelector('.time-slot-group[data-date="' + selectedDate + '"]');
+            if (activeGroup) {
+                activeGroup.classList.remove('d-none');
+            }
+        });
+    });
+
+
+
+
+    function toggleInfo(element) {
+        const infoDiv = element.querySelector('.info-popup');
+    
+        // Hide all other info popups so only one shows at a time
+        document.querySelectorAll('.info-popup').forEach(div => {
+          if (div !== infoDiv) {
+            div.style.display = 'none';
+          }
+        });
+    
+        // Toggle current one
+        if (infoDiv.style.display === 'block') {
+          infoDiv.style.display = 'none';
+        } else {
+          infoDiv.style.display = 'block';
+        }
+      }
+    
+      // Optional: Click anywhere outside to close popups
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('.social-btn')) {
+          document.querySelectorAll('.info-popup').forEach(div => {
+            div.style.display = 'none';
+          });
+        }
+      });
+
+
+      // --- Unified Slot Selection and Booking Validation ---
+      document.addEventListener("DOMContentLoaded", function () {
+        const slotButtons = document.querySelectorAll(".time-slot-tag");
+        const bookingDatetime = document.getElementById("booking-datetime");
+        const bookingAmount = document.getElementById("booking-amount");
+        const bookPayBtn = document.querySelector(".book-appointment-btn");
+        const totalAmountField = document.getElementById("totalAmountField");
+        let slotSelected = false;
+
+        // Disable pay button by default
+        if (bookPayBtn) bookPayBtn.disabled = true;
+
+        slotButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            // Get time, date, day, and amount
+            const time = this.dataset.time;
+            const date = this.dataset.date;
+            const day = this.dataset.day;
+            const amount = this.dataset.amount;
+            // Update right panel with date, day, and time
+            if (bookingDatetime)
+              bookingDatetime.textContent = `${day}, ${date} at ${time}`;
+            if (bookingAmount) bookingAmount.textContent = "₹" + amount;
+
+            // Highlight selected slot visually
+            slotButtons.forEach((btn) => btn.classList.remove("selected"));
+            this.classList.add("selected");
+
+            // Enable the pay button
+            if (bookPayBtn) {
+              bookPayBtn.disabled = false;
+            }
+            slotSelected = true;
+            // Set total field value
+            if (totalAmountField && amount) {
+              totalAmountField.value = (parseFloat(amount) + 100).toFixed(2);
+            }
+          });
+        });
+
+        // Prevent form submission if no slot selected or total is empty
+        const bookingForm = document.getElementById("booking-form");
+        if (bookingForm && bookPayBtn) {
+          bookingForm.addEventListener("submit", function (event) {
+            if (!slotSelected || !totalAmountField.value) {
+              event.preventDefault();
+              alert("Please select a time slot before booking and paying.");
+              bookPayBtn.disabled = true;
+            }
+          });
+        }
+      });
+
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const slotButtons = document.querySelectorAll(".slot-button");
+        const bookingTimeEl = document.querySelector(".booking-time");
+        const totalAmountEl = document.querySelector(".booking-amount");
+    
+        slotButtons.forEach(button => {
+          button.addEventListener("click", function (e) {
+            e.preventDefault();
+    
+            // Remove 'active' class from all slots
+            slotButtons.forEach(btn => btn.classList.remove("selected"));
+    
+            // Add active class to selected one
+            this.classList.add("selected");
+    
+            // Get data attributes
+            const time = this.getAttribute("data-time");
+            const amount = this.getAttribute("data-amount");
+    
+            // Update booking summary
+            if (bookingTimeEl) bookingTimeEl.textContent = time;
+            if (totalAmountEl) totalAmountEl.textContent = "₹" + amount;
+          });
+        });
+      });
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const starRatingInputContainer = document.querySelector('.star-rating-input');
+        const stars = starRatingInputContainer ? starRatingInputContainer.querySelectorAll('.star') : [];
+        const hiddenRatingInput = document.getElementById('id_rating'); // Get the hidden input for the rating field
+
+        if (starRatingInputContainer && hiddenRatingInput) {
+            let currentRating = 0; // Initialize selected rating
+
+            // Function to update star display based on a given rating value
+            function updateStarDisplay(ratingToDisplay) {
+                stars.forEach(star => {
+                    const starValue = parseInt(star.dataset.value);
+                    if (starValue <= ratingToDisplay) {
+                        star.classList.add('selected');
+                    } else {
+                        star.classList.remove('selected');
+                    }
+                    star.classList.remove('hovered'); // Clear hover state when updating selection
+                });
+            }
+
+            // If the form was submitted with errors, pre-select stars based on the old value
+            if (hiddenRatingInput.value) {
+                currentRating = parseInt(hiddenRatingInput.value);
+                updateStarDisplay(currentRating);
+            }
+
+            // Mouseover (hover) effect for stars
+            starRatingInputContainer.addEventListener('mouseover', function(event) {
+                const hoveredStar = event.target.closest('.star');
+                if (hoveredStar) {
+                    const hoverValue = parseInt(hoveredStar.dataset.value);
+                    stars.forEach(star => {
+                        const starValue = parseInt(star.dataset.value);
+                        if (starValue <= hoverValue) {
+                            star.classList.add('hovered');
+                        } else {
+                            star.classList.remove('hovered');
+                        }
+                    });
+                }
+            });
+
+            // Mouseout (reset hover effect)
+            starRatingInputContainer.addEventListener('mouseout', function() {
+                stars.forEach(star => {
+                    star.classList.remove('hovered');
+                });
+                // Re-apply the currently selected rating visually
+                updateStarDisplay(currentRating);
+            });
+
+            // Click event to set the rating
+            starRatingInputContainer.addEventListener('click', function(event) {
+                const clickedStar = event.target.closest('.star');
+                if (clickedStar) {
+                    currentRating = parseInt(clickedStar.dataset.value);
+                    hiddenRatingInput.value = currentRating; // Crucially update the hidden input's value
+                    updateStarDisplay(currentRating); // Update visual display
+                }
+            });
+        }
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const razorpayButton = document.getElementById('razorpayButton');
+        // Assuming you have a Bootstrap modal with id 'slotSelectionModal'
+        const slotSelectionModal = new bootstrap.Modal(document.getElementById('slotSelectionModal'));
+
+        if (razorpayButton) {
+            razorpayButton.addEventListener('click', function(event) {
+                // Ensure your slot selection inputs have the name 'selected_slot'
+                const selectedSlot = document.querySelector('input[name="selected_slot"]:checked');
+
+                if (!selectedSlot) {
+                    event.preventDefault(); // Stop the default button action
+                    slotSelectionModal.show(); // Show the warning modal
+                } else {
+                    // If a slot is selected, proceed with your payment logic.
+                    // This is where you would call your Razorpay initialization function
+                    // or submit a form that leads to payment.
+                    // Example: initiateRazorpayPayment(selectedSlot.value);
+                    // Or if your button is part of a form: document.getElementById('yourBookingFormId').submit();
+                }
+            });
+        }
+    });
+
+    
+   
+
+    </script>
+{% endblock content %}

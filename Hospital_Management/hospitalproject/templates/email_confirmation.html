@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Appointment Confirmation</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333333; line-height: 1.6; margin: 0; padding: 0;">
+    <div style="max-width: 600px; margin: 20px auto; background-color: #333333; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); color: #ffffff;">
+        
+        <!-- Header -->
+        <div style="background-color: #333333; padding: 20px; text-align: center; color: #28a745; font-size: 24px; font-weight: bold;">
+            Appointment Confirmed {{ user.first_name|default:"User" }}!
+        </div>
+        
+        <!-- Content -->
+        <div style="padding: 20px;">
+            <p style="margin-bottom: 10px;">Hi {{ user.first_name|default:"User" }},</p>
+            <p style="margin-bottom: 10px;">Thank you for booking your appointment with <strong>CuraCare Health</strong>. Your appointment has been confirmed successfully.</p>
+
+            <!-- Doctor Details -->
+            <div style="margin-top: 20px; padding: 15px; background-color: #444444; border-radius: 5px;">
+                <h3 style="color: #ffffff; font-size: 18px; margin-bottom: 10px; border-bottom: 1px solid #555555; padding-bottom: 5px;">👨‍⚕️ Doctor Details</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 8px; font-size: 16px;"><strong>Name:</strong> Dr. {{ doctor.name }}</li>
+                    <li style="margin-bottom: 8px; font-size: 16px;"><strong>Speciality:</strong> {{ doctor.speciality }}</li>
+                    <li style="margin-bottom: 8px; font-size: 16px;"><strong>Experience:</strong> {{ doctor.experience }} years</li>
+                </ul>
+            </div>
+
+            <!-- Appointment Slot -->
+            <div style="margin-top: 20px; padding: 15px; background-color: #444444; border-radius: 5px;">
+                <h3 style="color: #ffffff; font-size: 18px; margin-bottom: 10px; border-bottom: 1px solid #555555; padding-bottom: 5px;">⏰ Appointment Slot</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 8px; font-size: 16px;"><strong>Date:</strong> {{ slot.date|date:"F d, Y" }}</li>
+                    <li style="margin-bottom: 8px; font-size: 16px;"><strong>Time:</strong> {{ slot.time|time:"g a" }}</li>
+                </ul>
+            </div>
+
+            <!-- Amount Paid -->
+            <p style="font-size: 20px; font-weight: bold; color: #ffffff; margin-top: 20px; text-align: right; padding-right: 20px; padding-bottom: 20px;">💵 Amount Paid: ₹{{ booking.amount }}</p>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 20px; text-align: center; font-size: 12px; color: #aaaaaa; background-color: #222222;">
+            <p style="margin: 0;">&copy; 2025 CuraCare Health. All rights reserved.</p>
+            <p style="margin: 0;">If you have any questions, please contact us at +91 1800-123-4567</p>
+        </div>
+    </div>
+</body>
+</html>

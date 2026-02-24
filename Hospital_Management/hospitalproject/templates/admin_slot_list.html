@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Manage Appointment Slots{% endblock %}
+{% block content %}
+<div class="admin-dashboard-layout">
+    <aside class="admin-sidepanel">
+        <div class="sidepanel-header">
+            <i class="fas fa-cogs"></i> Admin Panel
+        </div>
+        <nav class="sidepanel-nav">
+            <a href="{% url 'admin_dashboard' %}" class="sidepanel-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="{% url 'admin_doctor_list' %}" class="sidepanel-link"><i class="fas fa-user-md"></i> Manage Doctors</a>
+            <a href="{% url 'admin_speciality_list' %}" class="sidepanel-link"><i class="fas fa-stethoscope"></i> Manage Specialities</a>
+            <a href="{% url 'admin_booking_list' %}" class="sidepanel-link"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
+            <a href="{% url 'admin_slot_list' %}" class="sidepanel-link"><i class="fas fa-clock"></i> Appointment Slots</a>
+        </nav>
+    </aside>
+    <main class="admin-dashboard-main">
+        <div class="admin-dashboard-container">
+            <h1 class="dashboard-title">Manage Appointment Slots</h1>
+            <a href="{% url 'admin_add_slot' %}" class="btn btn-primary mb-3">Add Slot</a>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for slot in slots %}
+                    <tr>
+                        <td>{{ slot.doctor.name }}</td>
+                        <td>{{ slot.date }}</td>
+                        <td>{{ slot.time }}</td>
+                        <td>{% if slot.is_booked %}Booked{% else %}Available{% endif %}</td>
+                        <td>
+                            <a href="{% url 'admin_edit_slot' slot.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{% url 'admin_delete_slot' slot.id %}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5">No slots found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+{% endblock %}

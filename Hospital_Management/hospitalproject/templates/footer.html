@@ -1,0 +1,55 @@
+{% load static %}
+
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col footer-info">
+                <div class="footer-logo">
+                    <i class="fas fa-heartbeat"></i>
+
+                    <span class="logo-text">CuraCare</span>
+                </div>
+                <p class="company-description">Your trusted healthcare partner, connecting you with the best doctors and medical services.</p>
+            </div>
+
+            <div class="footer-col footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'doctors' %}">Find Doctors</a></li>
+                    <li><a href="">Book Appointment</a></li>
+                    <li><a href="{% url 'health_plans' %}">Faqs</a></li>
+                    <li><a href="{% url 'about'%}">About Us</a></li>
+                    <li><a href="{% url 'home' %}">CuraCare</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col footer-links">
+                <h3>Specialties</h3>
+                <ul>
+                    <li><a href="{% url 'doctors_by_speciality' 'cardiologist' %}">Cardiology</a></li>
+                    <li><a href="{% url 'doctors_by_speciality' 'neurologist' %}">Neurology</a></li>
+                    <li><a href="{% url 'doctors_by_speciality' 'pediatrics' %}">Pediatrics</a></li>
+                    <li><a href="{% url 'doctors_by_speciality' 'orthopedics' %}">Orthopedics</a></li>
+                    <li><a href="{% url 'doctors_by_speciality' 'dermatologist' %}">Dermatology</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone-alt"></i> +91 1800-123-4567</p>
+                <p><i class="fas fa-envelope"></i> support@curacare.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Healthcare St, Mumbai, India</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2024 CuraCare. All rights reserved</p>
+            <div class="policy-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>

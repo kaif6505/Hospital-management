@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="curasync-email-container">
+    <h2 class="curasync-header">Appointment Confirmed!</h2>
+
+    <p>Hi {{ user.first_name|default:user.username }},</p>
+    <p>Thank you for booking your appointment with <strong>CuraCare Health</strong>. Your appointment has been confirmed successfully.</p>
+
+    <div class="curasync-section-title">👨‍⚕️ Doctor Details</div>
+    <ul class="curasync-list">
+      <li class="curasync-list-item"><strong>Name:</strong> Dr. {{ booking.doctor.name }}</li>
+      <li class="curasync-list-item"><strong>Speciality:</strong> {{ booking.doctor.speciality }}</li>
+      <li class="curasync-list-item"><strong>Experience:</strong> {{ booking.doctor.experience }} years</li>
+    </ul>
+
+    <div class="curasync-section-title">🕒 Appointment Slot</div>
+    <ul class="curasync-list">
+      <li class="curasync-list-item"><strong>Date:</strong> {{ booking.slot.date }}</li>
+      <li class="curasync-list-item"><strong>Time:</strong> {{ booking.slot.time }}</li>
+      <li class="curasync-list-item"><strong>Consultation Type:</strong> {{ slot.consultation_type }}</li>
+    </ul>
+
+    <p class="curasync-amount">💳 Amount Paid: ₹{{ booking.amount }}</p>
+
+    {% comment %} <a href="http://127.0.0.1:8000/" class="curasync-btn">Visit Dashboard</a> {% endcomment %}
+
+    <p class="curasync-footer">
+      This is an automated message. Please do not reply.<br>
+      Need help? <a href="mailto:support@curasync.com">Contact Support</a>
+    </p>
+  </div>
+  {% endblock content %}
+

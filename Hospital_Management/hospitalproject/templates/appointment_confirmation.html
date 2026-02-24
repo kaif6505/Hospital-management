@@ -1,0 +1,37 @@
+  {% extends "base.html" %}
+
+  {% block conetnt %}
+  <div class="curasync-email-container">
+    <h2 class="curasync-header">Appointment Confirmed </h2>
+
+    <p>Hi {{ user.first_name|default:user.username }},</p>
+    <p>Thank you for booking your appointment with <strong>CuraCare Health</strong>. Your appointment has been confirmed successfully.</p>
+
+    <div class="curasync-section-title">👨‍⚕️ Doctor Details</div>
+    <ul class="curasync-list">
+      <li class="curasync-list-item"><strong>Name:</strong> Dr. {{ doctor.name }}</li>
+      <li class="curasync-list-item"><strong>Speciality:</strong> {{ doctor.speciality }}</li>
+      <li class="curasync-list-item"><strong>Experience:</strong> {{ doctor.experience }} years</li>
+    </ul>
+
+    <div class="curasync-section-title">🕒 Appointment Slot</div>
+    <ul class="curasync-list">
+      <li class="curasync-list-item"><strong>Date:</strong> {{ slot.date }}</li>
+      <li class="curasync-list-item"><strong>Time:</strong> {{ slot.time }}</li>
+      
+    </ul>
+
+    <p class="curasync-amount">💳 Amount Paid: ₹{{ booking.amount }}</p>
+
+  
+
+    <p class="curasync-footer">
+      This is an automated message. Please do not reply.<br>
+      
+    </p>
+  </div>
+
+  {% endblock conetnt %}
+
+
+

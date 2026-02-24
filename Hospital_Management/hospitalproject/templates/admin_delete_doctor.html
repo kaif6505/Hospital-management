@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Delete Doctor{% endblock %}
+{% block content %}
+<div class="admin-dashboard-layout">
+    <aside class="admin-sidepanel">
+        <div class="sidepanel-header">
+            <i class="fas fa-cogs"></i> Admin Panel
+        </div>
+        <nav class="sidepanel-nav">
+            <a href="{% url 'admin_dashboard' %}" class="sidepanel-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="{% url 'admin_doctor_list' %}" class="sidepanel-link"><i class="fas fa-user-md"></i> Manage Doctors</a>
+            <a href="{% url 'admin_speciality_list' %}" class="sidepanel-link"><i class="fas fa-stethoscope"></i> Manage Specialities</a>
+            <a href="{% url 'admin_booking_list' %}" class="sidepanel-link"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
+            <a href="{% url 'admin_slot_list' %}" class="sidepanel-link"><i class="fas fa-clock"></i> Appointment Slots</a>
+        </nav>
+    </aside>
+    <main class="admin-dashboard-main">
+        <div class="admin-dashboard-container">
+            <h1 class="dashboard-title">Delete Doctor</h1>
+            <p>Are you sure you want to delete Dr. {{ doctor.name }}?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a href="{% url 'admin_doctor_list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </main>
+</div>
+{% endblock %}

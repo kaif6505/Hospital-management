@@ -1,0 +1,128 @@
+{% extends "base.html" %} 
+{% block title %}Add Doctor{% endblock %} 
+{% block content %}
+<div class="admin-dashboard-layout">
+  <aside class="admin-sidepanel">
+    <div class="sidepanel-header"><i class="fas fa-cogs"></i> Admin Panel</div>
+    <nav class="sidepanel-nav">
+      <a href="{% url 'admin_dashboard' %}" class="sidepanel-link"
+        ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+      >
+      <a href="{% url 'admin_doctor_list' %}" class="sidepanel-link"
+        ><i class="fas fa-user-md"></i> Manage Doctors</a
+      >
+      <a href="{% url 'admin_speciality_list' %}" class="sidepanel-link"
+        ><i class="fas fa-stethoscope"></i> Manage Specialities</a
+      >
+      <a href="{% url 'admin_booking_list' %}" class="sidepanel-link"
+        ><i class="fas fa-calendar-check"></i> Manage Bookings</a
+      >
+      <a href="{% url 'admin_slot_list' %}" class="sidepanel-link"
+        ><i class="fas fa-clock"></i> Appointment Slots</a
+      >
+      >
+    </nav>
+  </aside>
+  <main class="admin-dashboard-main">
+    <div class="admin-dashboard-container">
+      <h1 class="dashboard-title">Add Doctor</h1>
+      {% if form.errors %}
+      <div class="alert alert-danger">
+        <ul>
+          {% for field, errors in form.errors.items %} {% for error in errors %}
+          <li><strong>{{ field|capfirst }}:</strong> {{ error }}</li>
+          {% endfor %} {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_name">Doctor Name</label>
+          {{ form.name }}
+        </div>
+        <div class="form-group">
+          <label for="id_image">Image</label>
+          {{ form.image }}
+        </div>
+        <div class="form-group">
+          <label for="id_experience">Experience (years)</label>
+          {{ form.experience }}
+        </div>
+        <div class="form-group">
+          <label for="id_consultation_fee">Consultation Fee (₹)</label>
+          {{ form.consultation_fee }}
+        </div>
+        <div class="form-group">
+          <label for="id_clinic_name">Clinic Name</label>
+          {{ form.clinic_name }}
+        </div>
+        <div class="form-group">
+          <label for="id_address">Address</label>
+          {{ form.address }}
+        </div>
+        <div class="form-group">
+          <label for="id_location">Location</label>
+          {{ form.location }}
+        </div>
+        <div class="form-group">
+          <label for="id_speciality">Speciality</label>
+          {{ form.speciality }}
+        </div>
+        <div class="form-group">
+          <label for="id_contact_number">Contact Number</label>
+          {{ form.contact_number }}
+        </div>
+        <div class="form-group">
+          <label for="id_email">Email</label>
+          {{ form.email }}
+        </div>
+        <div class="form-group">
+          <label for="id_education_1">Education 1</label>
+          {{ form.education_1 }}
+        </div>
+        <div class="form-group">
+          <label for="id_education_2">Education 2</label>
+          {{ form.education_2 }}
+        </div>
+        <div class="form-group">
+          <label for="id_education_3">Education 3</label>
+          {{ form.education_3 }}
+        </div>
+        <div class="form-group">
+          <label for="id_education_4">Education 4</label>
+          {{ form.education_4 }}
+        </div>
+        <div class="form-group">
+          <label for="id_summary">About (Summary)</label>
+          {{ form.summary }}
+        </div>
+                <div class="form-group">
+          <label for="id_other_specialization_1">Other Specialization 1</label>
+          {{ form.other_specialization_1 }}
+        </div>
+        <div class="form-group">
+          <label for="id_other_specialization_2">Other Specialization 2</label>
+          {{ form.other_specialization_2 }}
+        </div>
+        <div class="form-group">
+          <label for="id_other_specialization_3">Other Specialization 3</label>
+          {{ form.other_specialization_3 }}
+        </div>
+        <div class="form-group">
+          <label for="id_other_specialization_4">Other Specialization 4</label>
+          {{ form.other_specialization_4 }}
+        </div>
+        <div class="form-group">
+          <label for="id_experience_details">Experience Details</label>
+          {{ form.experience_details }}
+        </div>
+        <button type="submit" class="btn btn-success">Add Doctor</button>
+        <a href="{% url 'admin_doctor_list' %}" class="btn btn-secondary"
+          >Cancel</a
+        >
+      </form>
+    </div>
+  </main>
+</div>
+{% endblock %}

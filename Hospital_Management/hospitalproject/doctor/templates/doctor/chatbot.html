@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="chat-section">
+    <div class="container">
+        <h2>Cylia</h2>
+        <div id="chat-window" class="chat-window">
+            <!-- messages will appear here -->
+        </div>
+        <form id="chat-form" class="chat-form">
+            <input type="text" id="user-input" placeholder="Type your question..." autocomplete="off" required />
+            <button type="submit" class="btn btn-primary">Send</button>
+            <button type="button" id="clear-btn" class="btn btn-secondary">Clear</button>
+        </form>
+    </div>
+</section>
+
+<style>
+/* container adjustments */
+.chat-section .container { max-width: 600px; margin: 2rem auto; }
+
+/* chat window styling */
+.chat-window {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    height: 400px;
+    overflow-y: auto;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* individual messages */
+.chat-message {
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-width: 80%;
+}
+.chat-message.user {
+    text-align: right;
+    background: #007bff;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 12px 12px 0 12px;
+    margin-left: auto;
+}
+.chat-message.ai {
+    text-align: left;
+    font-style: italic;
+    background: #f1f1f1;
+    padding: 0.5rem;
+    border-radius: 12px 12px 12px 0;
+    margin-right: auto;
+}
+
+/* form styling */
+.chat-form { display: flex; margin-top: 1rem; }
+.chat-form input {
+    flex: 1;
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.chat-form button {
+    padding: 0.5rem 1rem;
+}
+
+/* clear button placement */
+.chat-form #clear-btn {
+    margin-left: 0.5rem;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('user-input');
+    const windowEl = document.getElementById('chat-window');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = input.value.trim();
+        if (!message) return;
+        appendMessage('user', message);
+        input.value = '';
+        try {
+            const formData = new FormData();
+            formData.append('message', message);
+            const res = await fetch('{% url "chatbot_api" %}', {
+                method: 'POST',
+                body: formData
+            });
+            if (!res.ok) {
+                const text = await res.text();
+                appendMessage('ai', 'Error: ' + text);
+            } else {
+                const data = await res.json();
+                if (data.reply) {
+                    appendMessage('ai', data.reply);
+                } else if (data.error) {
+                    appendMessage('ai', 'Error: ' + data.error);
+                }
+            }
+        } catch (err) {
+            appendMessage('ai', 'Network error');
+        }
+        windowEl.scrollTop = windowEl.scrollHeight;
+    });
+
+    document.getElementById('clear-btn').addEventListener('click', async () => {
+        windowEl.innerHTML = '';
+    });
+
+    function appendMessage(who, text) {
+        const div = document.createElement('div');
+        div.className = 'chat-message ' + who;
+        div.textContent = text;
+        windowEl.appendChild(div);
+    }
+});
+</script>
+
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}  
+
+{% block content %}
+
+<!-- repeat the search bar so user can refine -->
+<form method="get" action="{% url 'search-doctors' %}" class="mb-4">
+    <div class="row g-2">
+        <div class="col">
+            <input type="text" name="speciality" class="form-control" placeholder="Speciality" value="{{ speciality_query }}">
+        </div>
+        <div class="col">
+            <input type="text" name="location" class="form-control" placeholder="Location" value="{{ location_query }}">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+
+{% if doctors %}
+  <div class="doctor-cards-container row my-5">
+    {% for doctor in doctors %}
+      {% include "doctor_card.html" with doctor=doctor %}
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No doctors found matching your criteria.</p>
+{% endif %}
+{% endblock %}
