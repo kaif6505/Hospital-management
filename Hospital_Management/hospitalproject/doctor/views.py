@@ -483,7 +483,7 @@ from django.http import JsonResponse
 from groq import Groq
 
 # Replace with your Groq API key
-client = Groq(api_key="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")
+client = Groq(api_key="myapi")
 
 
 def chatbot_page(request):

@@ -150,6 +150,6 @@ RAZORPAY_SECRET = 'CDA1xXvy6yqD198lS8lKKz81'
 EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST="smtp.gmail.com"
 EMAIL_PORT=587
-EMAIL_HOST_USER="siyavisrani@gmail.com"
+EMAIL_HOST_USER="akaif6505@gmail.com"
 EMAIL_HOST_PASSWORD="jyqn ueaf nhny vydh"
 EMAIL_USE_TLS=True
