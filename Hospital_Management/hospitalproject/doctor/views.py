@@ -16,6 +16,8 @@ from hospitalproject.settings import RAZORPAY_ID,RAZORPAY_SECRET
 from django.core.mail import send_mail,EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+import logging
+import smtplib
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -250,11 +252,12 @@ def cancel_booking(request, booking_uuid):
     booking.slot.save()
     booking.save()
 
-    # Send cancellation email
-    send_mail(
-        subject='Your Appointment Has Been Cancelled',
-        
-        message=f'''
+    # Send cancellation email (don't let email failures raise a 500)
+    logger = logging.getLogger(__name__)
+    try:
+        send_mail(
+            subject='Your Appointment Has Been Cancelled',
+            message=f'''\
 Hi {request.user.first_name},
 
 Your appointment with Dr. {booking.doctor.name} on {booking.slot.date} at {booking.slot.time} has been successfully cancelled.
@@ -265,10 +268,14 @@ If this was a mistake, please log in to rebook another slot.
 Thank you,
 Curacare Team
 ''',
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[request.user.email],
-        fail_silently=False,
-    )
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[request.user.email],
+            fail_silently=False,
+        )
+    except smtplib.SMTPException as e:
+        logger.error('Failed to send cancellation email for booking %s: %s', booking_uuid, e)
+        # Don't interrupt the user flow; keep a friendly message
+        messages.warning(request, 'Appointment cancelled but confirmation email could not be sent.')
 
     return redirect('my-bookings')
 
@@ -306,24 +313,29 @@ def payment_success(request):
                 'booking': booking,
             })
             plain_message = strip_tags(html_message)
-            print("Sending email to:", request.user.email)
-            send_mail(
-                subject,
-                "Booking Done",
-                settings.EMAIL_HOST_USER,
-                [request.user.email],
-                html_message=html_message,
-                fail_silently=False,
-            )
-            email = EmailMultiAlternatives(
-                subject,
-                "Your appointment has been confirmed ",
-                settings.EMAIL_HOST_USER,
-                [request.user.email],
-            )
-            email.attach_alternative(html_message,'text/html')
-            email.send()
-            print("Bye")
+            logger = logging.getLogger(__name__)
+            logger.info('Sending confirmation email to: %s', request.user.email)
+            try:
+                send_mail(
+                    subject,
+                    "Booking Done",
+                    settings.EMAIL_HOST_USER,
+                    [request.user.email],
+                    html_message=html_message,
+                    fail_silently=False,
+                )
+                email = EmailMultiAlternatives(
+                    subject,
+                    "Your appointment has been confirmed ",
+                    settings.EMAIL_HOST_USER,
+                    [request.user.email],
+                )
+                email.attach_alternative(html_message,'text/html')
+                email.send()
+                logger.info('Confirmation email sent to %s', request.user.email)
+            except smtplib.SMTPException as e:
+                logger.error('Failed to send confirmation email for booking %s: %s', booking.booking_uuid, e)
+                # Continue to show success page even if email fails
             return render(request, 'payment_success.html', {'booking': booking})
 
         except Payment.DoesNotExist:
@@ -483,7 +495,7 @@ from django.http import JsonResponse
 from groq import Groq
 
 # Replace with your Groq API key
-client = Groq(api_key="myapi")
+client = Groq(api_key="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")
 
 
 def chatbot_page(request):
