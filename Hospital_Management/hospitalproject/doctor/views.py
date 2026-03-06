@@ -16,7 +16,7 @@ from hospitalproject.settings import RAZORPAY_ID,RAZORPAY_SECRET
 from django.core.mail import send_mail,EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-import logging
+git push origin masterimport logging
 import smtplib
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
